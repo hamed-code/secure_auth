@@ -34,6 +34,8 @@
                 }
             }
         }
+
+        $Error = "Wrong email or password";
     }
 
     // echo $_SESSION['username'];
