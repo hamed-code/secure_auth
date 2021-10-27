@@ -1,6 +1,7 @@
 <?php
 
 require '../private/autoload.php';
+$user_date = check_login($connection);
 
 ?>
 
@@ -13,6 +14,7 @@ require '../private/autoload.php';
     <title>Document</title>
 </head>
 <body>
+    <h2>Hi <?= $_SESSION['username'] ?></h2>
         This is the home page.
 </body>
 </html>

@@ -18,7 +18,6 @@
             $arr['password'] = $password;
             $arr['email'] = $email;
 
-            // $query = "INSERT INTO `users` (url_address,username,password,email,date) VALUES ('$url_address','$username','$password','$email','$date')";
             $query = "SELECT * FROM `users` WHERE email = :email && password = :password limit 1";
             $stmt = $connection->prepare($query);
             $check = $stmt->execute($arr);
