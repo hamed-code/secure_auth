@@ -12,3 +12,7 @@ function get_random_string($length){
     }
     return $text;
 }
+
+function esc($word){
+    return addslashes($word);
+}

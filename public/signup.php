@@ -12,11 +12,20 @@
         }
         $date = date("Y-m-d H:i:s");
         $url_address = get_random_string(60);
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+
+        $username = trim($_POST['username']); 
+        if(!preg_match("/^[a-zA-Z]+$/", $username)){
+            $Error = "Please Enter A Valid UserName!";
+        }
+
+        $username = esc($username);
+        $password = esc($_POST['password']); 
 
         $query = "INSERT INTO `users` (url_address,username,password,email,date) VALUES ('$url_address','$username','$password','$email','$date')";
         mysqli_query($connection,$query);
+
+        header("Location: login.php");
+        die;    
     }
  
 
