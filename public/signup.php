@@ -3,6 +3,8 @@
     require '../private/autoload.php';
 
     $Error = "";
+    $email = "";
+    $username = "";
     
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
@@ -20,6 +22,23 @@
 
         $username = esc($username);
         $password = esc($_POST['password']); 
+
+        //check if email exists
+        
+            $arr = false;
+            $arr['email'] = $email;
+            $query = "SELECT * FROM `users` WHERE email = :email limit 1";
+            $stmt = $connection->prepare($query);
+            $check = $stmt->execute($arr);
+
+            if($check){
+
+                $data = $stmt->fetchAll(PDO::FETCH_OBJ);
+                if(is_array($data) && count($data) > 0){
+                  
+                    $Error = "Someone is already using that Email!";
+                }
+            }
 
         if($Error == ""){
             $arr['url_address'] = $url_address;
@@ -75,8 +94,8 @@
     <form method="POST">
         <div><?php if(isset($Error) && $Error != ""){ echo $Error; }?></div>
         <div id="title">Signup</div>
-        <input id="textbox" type="text" name="username" required><br>
-        <input id="textbox" type="email" name="email" required><br>
+        <input id="textbox" type="text" name="username" value="<?= $username ?>" required><br>
+        <input id="textbox" type="email" name="email" value="<?= $email ?>" required><br>
         <input id="textbox" type="password" name="password" required><br><br>
         <input type="submit" value="Signup">
     </form>
