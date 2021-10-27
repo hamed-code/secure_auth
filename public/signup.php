@@ -21,11 +21,21 @@
         $username = esc($username);
         $password = esc($_POST['password']); 
 
-        $query = "INSERT INTO `users` (url_address,username,password,email,date) VALUES ('$url_address','$username','$password','$email','$date')";
-        mysqli_query($connection,$query);
+        if($Error == ""){
+            $arr['url_address'] = $url_address;
+            $arr['date'] = $date;
+            $arr['username'] = $username;
+            $arr['password'] = $password;
+            $arr['email'] = $email;
 
-        header("Location: login.php");
-        die;    
+            // $query = "INSERT INTO `users` (url_address,username,password,email,date) VALUES ('$url_address','$username','$password','$email','$date')";
+            $query = "INSERT INTO `users` (url_address,username,password,email,date) VALUES (:url_address,:username,:password,:email,:date)";
+            $stmt = $connection->prepare($query);
+            $stmt->execute($arr);
+
+            header("Location: login.php");
+            die;    
+        }
     }
  
 
